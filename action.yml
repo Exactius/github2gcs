@@ -32,7 +32,7 @@ runs:
       uses: 'google-github-actions/setup-gcloud@v0'
       # Sync files to bucket
       # echo "Syncing bucket $BUCKET ..."
-    - run:  gsutil -m rsync -r -c -d ${{ github.event.repository.name }} gs://${{ inputs.GCS_BUCKET }}/${{ github.event.repository.name }}
+    - run:  gsutil -m rsync -r -c -d ./${{ github.event.repository.name }} gs://${{ inputs.GCS_BUCKET }}/${{ github.event.repository.name }}
           #  if [ $? -ne 0 ]; then
           #  echo "Syncing failed"
           #  exit 1
