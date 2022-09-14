@@ -1,0 +1,52 @@
+name: 'github2gcs'
+description: 'Github repo backup to GCS bucket'   
+inputs:
+  workload_identity_provider: 
+     description: "..."
+     required: true
+  service_account: 
+      description: "..."
+      required: true
+  SLACK_WEBHOOK: 
+     description: "..."
+     required: true
+  GCS_BUCKET: 
+     description: "..."
+     required: true
+  rsync_exclude: 
+     description: "..."
+     required: true
+runs:
+   using: "composite"
+   steps:
+    - id: 'checkout'
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: '0'
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v0'
+      with:
+        workload_identity_provider: ${{ inputs.workload_identity_provider }}
+        service_account: ${{ inputs.service_account }}
+
+    - id: 'Sync repo'
+      uses: 'google-github-actions/setup-gcloud@v0'
+      # Sync files to bucket
+    - run: echo "Syncing bucket $BUCKET ..."
+           gsutil -m rsync -r -c -d -x ${{ inputs.rsync_exclude }} /github/workspace/${{ github.event.repository.name }} gs://${{ inputs.GCS_BUCKET }}/${{ github.event.repository.name }}
+            if [ $? -ne 0 ]; then
+            echo "Syncing failed"
+            exit 1
+            fi
+            echo "Done."
+      shell: bash
+    - name: Slack Notification
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_CHANNEL: general
+        SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
+        SLACK_ICON: https://github.com/rtCamp.png?size=48
+        SLACK_MESSAGE: '${{ github.event.repository.name }} backup Done!'
+        SLACK_TITLE: GitHub repo backup
+        SLACK_USERNAME: rtCamp
+        SLACK_WEBHOOK: ${{ inputs.SLACK_WEBHOOK }}
