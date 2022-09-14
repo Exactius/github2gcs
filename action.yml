@@ -31,8 +31,8 @@ runs:
     - id: 'sync-repo'
       uses: 'google-github-actions/setup-gcloud@v0'
       # Sync files to bucket
-    - run: echo "Syncing bucket $BUCKET ..."
-           gsutil -m rsync -r -c -d -x ${{ inputs.rsync_exclude }} /github/workspace/${{ github.event.repository.name }} gs://${{ inputs.GCS_BUCKET }}/${{ github.event.repository.name }}
+      # echo "Syncing bucket $BUCKET ..."
+    - run:  gsutil -m rsync -r -c -d -x ${{ inputs.rsync_exclude }} /github/workspace/${{ github.event.repository.name }} gs://${{ inputs.GCS_BUCKET }}/${{ github.event.repository.name }}
             if [ $? -ne 0 ]; then
             echo "Syncing failed"
             exit 1
