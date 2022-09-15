@@ -63,11 +63,11 @@ runs:
       with:
       # Slack channel id, channel name, or user id to post message.
       # See also: https://api.slack.com/methods/chat.postMessage#channels
-      channel-id: ${{ input.CHANNEL_ID }}
+      channel-id: ${{ inputs.CHANNEL_ID }}
       # For posting a rich message using Block Kit
       payload: |
           {
-            "text": "${{ input.message_title }}",
+            "text": "${{ inputs.message_title }}",
             {
 	"blocks": [
 		{
@@ -100,5 +100,5 @@ runs:
 		}
 	]
 }
-     env:
-     SLACK_WEBHOOK: ${{ inputs.SLACK_WEBHOOK }}
+           env:
+              SLACK_WEBHOOK: ${{ inputs.SLACK_WEBHOOK }}
