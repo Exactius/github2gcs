@@ -62,12 +62,12 @@ runs:
       if: ${{ failure() }}
       uses: slackapi/slack-github-action@v1.22.0
       with:
-      channel-id: alerts-and-notifications
+        channel-id: alerts-and-notifications
         # This data can be any valid JSON from a previous step in the GitHub Action
-      payload: |
-         {
-           "key": "value",
-            "foo": "bar"
-          }
+        payload: |
+           {
+             "key": "value",
+              "foo": "bar"
+            }
       env:
       SLACK_WEBHOOK_URL: ${{ inputs.SLACK_WEBHOOK }}
