@@ -38,19 +38,14 @@ runs:
       # Sync files to bucket
       # echo "Syncing bucket $BUCKET ..."
     - run:  gsutil -m rsync -r -c -d ./${{ inputs.repodst }} gs://${{ inputs.GCS_BUCKET }}/${{ inputs.repodst }}
-          #  if [ $? -ne 0 ]; then
-          #  echo "Syncing failed"
-          #  exit 1
-          #  fi
-          # echo "Done."
       shell: bash
     - name: Slack Notification
+        if: ${{ failure() }}
       uses: rtCamp/action-slack-notify@v2
       env:
         SLACK_CHANNEL: alerts-and-notifications
         SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
-        SLACK_ICON: https://github.com/rtCamp.png?size=48
-        SLACK_MESSAGE: '${{ github.event.repository.name }} backup Done!'
-        SLACK_TITLE: GitHub repo backup
-        SLACK_USERNAME: rtCamp
+        SLACK_ICON: :alert:
+        SLACK_MESSAGE: '${{ github.event.repository.name }} backup failed!'
+        SLACK_TITLE: GitHub repo backup failed
         SLACK_WEBHOOK: ${{ inputs.SLACK_WEBHOOK }}
