@@ -40,12 +40,12 @@ runs:
     - run:  gsutil -m rsync -r -c -d ./${{ inputs.repodst }} gs://${{ inputs.GCS_BUCKET }}/${{ inputs.repodst }}
       shell: bash
     - name: Slack Notification
-        if: ${{ failure() }}
+      if: ${{ failure() }}
       uses: rtCamp/action-slack-notify@v2
       env:
         SLACK_CHANNEL: alerts-and-notifications
         SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
-        SLACK_ICON: :alert:
+        SLACK_ICON: ':alert:'
         SLACK_MESSAGE: '${{ github.event.repository.name }} backup failed!'
         SLACK_TITLE: GitHub repo backup failed
         SLACK_WEBHOOK: ${{ inputs.SLACK_WEBHOOK }}
