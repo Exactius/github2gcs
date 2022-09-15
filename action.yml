@@ -2,23 +2,31 @@ name: 'github2gcs'
 description: 'Github repo backup to GCS bucket'   
 inputs:
   workload_identity_provider: 
-     description: "..."
+     description: "Workload Identity provider path"
      required: true
   service_account: 
-      description: "..."
+      description: "GCS Service Account"
       required: true
   SLACK_WEBHOOK: 
-     description: "..."
+     description: "Incoming Slack Webhook url"
      required: true
   GCS_BUCKET: 
-     description: "..."
+     description: "GCS Bucket name"
      required: true
   myrepo: 
-     description: "..."
+     description: "GitHub Repository name"
      required: true
   repodst:
-     description: "..."
+     description: "Destenation folder in GCS Bucket"
      required: true
+ # message_title:
+#      description: "Slack message title"
+#      required: true
+#  message_body:
+#      description: "Slack message body"
+#      required: true
+  CHANNEL_ID:
+      description: "Slack channel to post the message"
 runs:
    using: "composite"
    steps:
@@ -39,13 +47,59 @@ runs:
       # echo "Syncing bucket $BUCKET ..."
     - run:  gsutil -m rsync -r -c -d ./${{ inputs.repodst }} gs://${{ inputs.GCS_BUCKET }}/${{ inputs.repodst }}
       shell: bash
-    - name: Slack Notification
-      if: ${{ failure() }}
-      uses: rtCamp/action-slack-notify@v2
+   # - name: Slack Notification
+   #   if: ${{ failure() }}
+   #   uses: rtCamp/action-slack-notify@v2
+  #    env:
+  #      SLACK_CHANNEL: alerts-and-notifications
+  #      SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
+   #     SLACK_ICON: ':alert:'
+   #     SLACK_MESSAGE: '${{ github.event.repository.name }} backup failed!'
+   #     SLACK_TITLE: GitHub repo backup failed
+  #      SLACK_WEBHOOK: ${{ inputs.SLACK_WEBHOOK }}
+    - name: Post to a Slack channel
+       id: slack
+       if: ${{ failure() }}
+        uses: slackapi/slack-github-action@v1.22.0
+      with:
+      # Slack channel id, channel name, or user id to post message.
+      # See also: https://api.slack.com/methods/chat.postMessage#channels
+       channel-id: ${{ input.CHANNEL_ID }}
+      # For posting a rich message using Block Kit
+       payload: |
+          {
+            "text": "${{ input.message_title }}",
+            {
+	"blocks": [
+		{
+			"type": "section",
+			"text": {
+				"type": "mrkdwn",
+				"text": "Backup failed"
+			}
+		},
+		{
+			"type": "section",
+			"fields": [
+				{
+					"type": "mrkdwn",
+					"text": "*Event:*\n${{ github.event.repository.name }} backup failed!"
+				},
+				{
+					"type": "mrkdwn",
+					"text": "*User:*\n${{github.actor}}"
+				},
+				{
+					"type": "mrkdwn",
+					"text": "*Url:*\n${{ inputs.myrepo }})"
+				},
+				{
+					"type": "mrkdwn",
+					"text": "*Workflow:*\n${{ github.workflow }}"
+				}
+			]
+		}
+	]
+}
       env:
-        SLACK_CHANNEL: alerts-and-notifications
-        SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
-        SLACK_ICON: ':alert:'
-        SLACK_MESSAGE: '${{ github.event.repository.name }} backup failed!'
-        SLACK_TITLE: GitHub repo backup failed
-        SLACK_WEBHOOK: ${{ inputs.SLACK_WEBHOOK }}
+      SLACK_WEBHOOK: ${{ inputs.SLACK_WEBHOOK }}
