@@ -13,7 +13,10 @@ inputs:
   GCS_BUCKET: 
      description: "..."
      required: true
-  rsync_exclude: 
+  myrepo: 
+     description: "..."
+     required: true
+   repodst: 
      description: "..."
      required: true
 runs:
@@ -22,6 +25,8 @@ runs:
     - id: 'checkout'
       uses: actions/checkout@v3
       with:
+        repository: ${{ input.myrepo }}
+        path: ${{input.repodst }}
         fetch-depth: '0'
     - id: 'auth'
       uses: 'google-github-actions/auth@v0'
