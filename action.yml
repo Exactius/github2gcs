@@ -16,7 +16,7 @@ inputs:
   myrepo: 
      description: "..."
      required: true
-   repodst: 
+  repodst:
      description: "..."
      required: true
 runs:
