@@ -70,4 +70,4 @@ runs:
               "foo": "bar"
             }
       env:
-      SLACK_WEBHOOK_URL: ${{ inputs.SLACK_WEBHOOK }}
+        SLACK_WEBHOOK_URL: ${{ inputs.SLACK_WEBHOOK }}
