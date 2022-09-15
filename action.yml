@@ -66,36 +66,38 @@ runs:
       channel-id: ${{ inputs.CHANNEL_ID }}
       # For posting a rich message using Block Kit
       payload: |
-{    "blocks": [
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": "Backup failed"
-        }
-      },
-      {
-        "type": "section",
-        "fields": [
-          {
-            "type": "mrkdwn",
-            "text": "*Event:*\n${{ github.event.repository.name }} backup failed!"
-          },
-          {
-           "type": "mrkdwn",
-            "text": "*User:*\n${{github.actor}}"
-          },
-         {
-            "type": "mrkdwn",
-            "text": "*Url:*\n${{ inputs.myrepo }})"
-          },
-         {
-            "type": "mrkdwn",
-            "text": "*Workflow:*\n${{ github.workflow }}"
-          }
-        ]
+{
+  "text": "GitHub Action {{ github.event.repository.name }} backup failed! ",
+  "blocks": [
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "Backup failed"
       }
-    ]
-  }
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Event:*\n${{ github.event.repository.name }} backup failed!"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*User:*\n${{github.actor}}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Url:*\n${{ inputs.myrepo }})"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Workflow:*\n${{ github.workflow }}"
+        }
+      ]
+    }
+  ]
+}
            env:
               SLACK_WEBHOOK: ${{ inputs.SLACK_WEBHOOK }}
