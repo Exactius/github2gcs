@@ -67,7 +67,6 @@ runs:
         # For posting a rich message using Block Kit
         payload: |
           {
-            "text": "Github Backup",
             "attachments": [
               {
                 "color": "'${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning'",
