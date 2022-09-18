@@ -66,30 +66,31 @@ runs:
         channel-id: ${{ inputs.CHANNEL_ID }}
         # For posting a rich message using Block Kit
         payload: |
-            {
-             "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "*Event:*\n${{ github.event.repository.name }} backup failed!"
-                  }
-                },
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "*Url:*\n${{ inputs.myrepo }}"
-                  }
-                },
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "*Workflow:*\n${{ github.workflow }}"
-                  }
+          {
+            "text": "Github Backup",
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*Event:*\n${{ github.event.repository.name }} backup failed!"
                 }
-             ]
-            }
+              },
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*Url:*\n${{ inputs.myrepo }}"
+                }
+              },
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*Workflow:*\n${{ github.workflow }}"
+                }
+              }
+            ]
+          }
       env:
         SLACK_WEBHOOK_URL: ${{ inputs.SLACK_WEBHOOK }}
