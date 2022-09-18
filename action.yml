@@ -67,35 +67,14 @@ runs:
         # For posting a rich message using Block Kit
         payload: |
           {
-            "text": "GitHub backup failed",
+            "text": "GitHub ${{ github.event.repository.name }} backup failed!",
             "blocks": [
               {
-                "type": "header",
-                "text": {
-                  "type": "plain_text",
-                  "text": "${{ github.event.repository.name }} backup failed!"
-                }
-              },
-              {
                 "type": "section",
-                "fields": [
-                  {
-                    "type": "mrkdwn",
-                    "text": "*Event:*\n${{ github.event.repository.name }} backup failed!"
-                  },
-                  {
-                    "type": "mrkdwn",
-                    "text": "*User:*\n${{ github.actor }}"
-                  },
-                  {
-                    "type": "mrkdwn",
-                    "text": "*Url:*\n${{ inputs.myrepo }}}"
-                  },
-                  {
-                    "type": "mrkdwn",
-                    "text": "*Workflow:*\n${{ github.workflow }}"
-                  }
-                ]
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "*Event:*\n${{ github.event.repository.name }} backup failed!"
+                }
               }
             ]
           }
