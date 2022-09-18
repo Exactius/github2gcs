@@ -67,16 +67,17 @@ runs:
         # For posting a rich message using Block Kit
         payload: |
           {
+            "text": "GitHub backup",
             "blocks": [
               {
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "This is a mrkdwn section block :ghost: *this is bold*, and ~this is crossed out~, and <https://google.com|this is a link>"
+                  "text": "${{ github.event.repository.name }}"
                 }
               }
             ]
           }
       env:
-        SLACK_WEBHOOK_URL: ${{ inputs.SLACK_WEBHOOK }}
-        SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
+          SLACK_WEBHOOK_URL: ${{ inputs.SLACK_WEBHOOK }}
+          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
