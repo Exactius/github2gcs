@@ -67,26 +67,31 @@ runs:
         # For posting a rich message using Block Kit
         payload: |
           {
-            "text": ":alert: GitHub backup failed",
-            "blocks": [
+            "text": ":alert: GitHub backup",
+            "attachments": [
               {
-                "type": "section",
-                "fields": [
+                "color": "danger",
+                "blocks": [
                   {
-                    "type": "mrkdwn",
-                    "text": "*Event:*\n${{ github.event.repository.name }} backup failed!"
-                  },
-                  {
-                    "type": "mrkdwn",
-                    "text": "*User:*\n${{ github.actor }}"
-                  },
-                  {
-                    "type": "mrkdwn",
-                    "text": "*Url:*\nhttps://github.com/${{ inputs.myrepo }}"
-                  },
-                  {
-                    "type": "mrkdwn",
-                    "text": "*Workflow:*\n${{ github.workflow }}"
+                    "type": "section",
+                    "fields": [
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Event:*\n${{ github.event.repository.name }} backup failed!"
+                      },
+                      {
+                        "type": "mrkdwn",
+                        "text": "*User:*\n${{ github.actor }}"
+                      },
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Url:*\n${{ inputs.myrepo }}"
+                      },
+                      {
+                        "type": "mrkdwn",
+                        "text": "*Workflow:*\n${{ github.workflow }}"
+                      }
+                    ]
                   }
                 ]
               }
