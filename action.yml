@@ -67,14 +67,8 @@ runs:
         # For posting a rich message using Block Kit
         payload: |
           {
+            "text": "GitHub Action ${{ github.event.repository.name }} backup failed!",
             "blocks": [
-              {
-                "type": "section",
-                "text": {
-                  "type": "mrkdwn",
-                  "text": "GitHub Action ${{ github.event.repository.name }} backup failed!"
-                }
-              },
               {
                 "type": "section",
                 "fields": [
@@ -88,7 +82,7 @@ runs:
                   },
                   {
                     "type": "mrkdwn",
-                    "text": "*Url:*\n${{ inputs.myrepo }})"
+                    "text": "*Url:*\n${{ inputs.myrepo }}"
                   },
                   {
                     "type": "mrkdwn",
