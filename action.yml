@@ -67,7 +67,6 @@ runs:
         # For posting a rich message using Block Kit
         payload: |
           {
-            "text": "GitHub Action ${{ github.event.repository.name }} backup failed!",
             "blocks": [
               {
                 "type": "section",
