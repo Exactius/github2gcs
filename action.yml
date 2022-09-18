@@ -67,6 +67,7 @@ runs:
         # For posting a rich message using Block Kit
         payload: |
           {
+            "text": "GitHub backup failed",
             "blocks": [
               {
                 "type": "header",
