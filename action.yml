@@ -68,27 +68,10 @@ runs:
         payload: |
           {
             "text": "Github Backup",
-            "blocks": [
+            "attachments": [
               {
-                "type": "section",
-                "text": {
-                  "type": "mrkdwn",
-                  "text": "*Event:*\n${{ github.event.repository.name }} backup failed!"
-                }
-              },
-              {
-                "type": "section",
-                "text": {
-                  "type": "mrkdwn",
-                  "text": "*Url:*\n${{ inputs.myrepo }}"
-                }
-              },
-              {
-                "type": "section",
-                "text": {
-                  "type": "mrkdwn",
-                  "text": "*Workflow:*\n${{ github.workflow }}"
-                }
+                "color": "'${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning'",
+                "text": "${{ github.event.repository.name }} backup failed! ${{ inputs.myrepo }} ${{ job.status }} in ${{ github.workflow }}"
               }
             ]
           }
