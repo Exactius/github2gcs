@@ -67,10 +67,13 @@ runs:
         # For posting a rich message using Block Kit
         payload: |
           {
-            "attachments": [
+            "blocks": [
               {
-                "color": "'${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning'",
-                "text": "${{ github.event.repository.name }} backup failed! ${{ inputs.myrepo }} ${{ job.status }} in ${{ github.workflow }}"
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "This is a mrkdwn section block :ghost: *this is bold*, and ~this is crossed out~, and <https://google.com|this is a link>"
+                }
               }
             ]
           }
