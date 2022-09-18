@@ -70,7 +70,7 @@ runs:
             "text": ":alert: GitHub backup",
             "attachments": [
               {
-                "color": "danger",
+                "color": "#f70202",
                 "blocks": [
                   {
                     "type": "section",
