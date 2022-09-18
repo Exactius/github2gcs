@@ -47,16 +47,6 @@ runs:
       # echo "Syncing bucket $BUCKET ..."
     - run:  gsutil -m rsync -r -c -d ./${{ inputs.repodst }} gs://${{ inputs.GCS_BUCKET }}/${{ inputs.repodst }}
       shell: bash
-   # - name: Slack Notification
-   #   if: ${{ failure() }}
-   #   uses: rtCamp/action-slack-notify@v2
-  #    env:
-  #      SLACK_CHANNEL: alerts-and-notifications
-  #      SLACK_COLOR: ${{ job.status }} # or a specific color like 'good' or '#ff00ff'
-   #     SLACK_ICON: ':alert:'
-   #     SLACK_MESSAGE: '${{ github.event.repository.name }} backup failed!'
-   #     SLACK_TITLE: GitHub repo backup failed
-  #      SLACK_WEBHOOK: ${{ inputs.SLACK_WEBHOOK }}
     - name: Post to a Slack channel
       if: ${{ failure() }}
       uses: slackapi/slack-github-action@v1.22.0
@@ -67,31 +57,26 @@ runs:
         # For posting a rich message using Block Kit
         payload: |
           {
-            "text": ":alert: GitHub backup",
-            "attachments": [
+            "text": ":alert: GitHub backup failed",
+            "blocks": [
               {
-                "color": "#f70202",
-                "blocks": [
+                "type": "section",
+                "fields": [
                   {
-                    "type": "section",
-                    "fields": [
-                      {
-                        "type": "mrkdwn",
-                        "text": "*Event:*\n${{ github.event.repository.name }} backup failed!"
-                      },
-                      {
-                        "type": "mrkdwn",
-                        "text": "*User:*\n${{ github.actor }}"
-                      },
-                      {
-                        "type": "mrkdwn",
-                        "text": "*Url:*\n${{ inputs.myrepo }}"
-                      },
-                      {
-                        "type": "mrkdwn",
-                        "text": "*Workflow:*\n${{ github.workflow }}"
-                      }
-                    ]
+                    "type": "mrkdwn",
+                    "text": "*Event:*\n${{ github.event.repository.name }} backup failed!"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*User:*\n${{ github.actor }}"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Url:*\nhttps://github.com/${{ inputs.myrepo }}"
+                  },
+                  {
+                    "type": "mrkdwn",
+                    "text": "*Workflow:*\n${{ github.workflow }}"
                   }
                 ]
               }
