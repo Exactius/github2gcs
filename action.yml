@@ -66,8 +66,37 @@ runs:
         # This data can be any valid JSON from a previous step in the GitHub Action
         payload: |
            {
-             "key": "value",
-              "foo": "bar"
-            }
+  "text": "GitHub Action {{ github.event.repository.name }} backup failed! ",
+  "blocks": [
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "Backup failed"
+      }
+    },
+    {
+      "type": "section",
+      "fields": [
+        {
+          "type": "mrkdwn",
+          "text": "*Event:*\n${{ github.event.repository.name }} backup failed!"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*User:*\n${{github.actor}}"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Url:*\n${{ inputs.myrepo }})"
+        },
+        {
+          "type": "mrkdwn",
+          "text": "*Workflow:*\n${{ github.workflow }}"
+        }
+      ]
+    }
+  ]
+}
       env:
         SLACK_WEBHOOK_URL: ${{ inputs.SLACK_WEBHOOK }}
