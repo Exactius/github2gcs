@@ -1,33 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@yehudaman 
-Exactius
-/
-github2gcs
-Public
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-github2gcs/action.yml
-@yehudaman
-yehudaman Update action.yml
-Latest commit 8445675 2 minutes ago
- History
- 1 contributor
-You can publish this Action to the GitHub Marketplace
-86 lines (86 sloc)  2.81 KB
-
 name: 'github2gcs'
 description: 'Github repo backup to GCS bucket'   
 inputs:
