@@ -78,7 +78,7 @@ runs:
                   },
                   {
                     "type": "mrkdwn",
-                    "text": "*User:*\n${{github.actor}}"
+                    "text": "*User:*\n${{ github.actor }}"
                   },
                   {
                     "type": "mrkdwn",
