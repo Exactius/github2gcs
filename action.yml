@@ -1,32 +1,27 @@
 name: 'github2gcs'
-description: 'Github repo backup to GCS bucket'   
+description: 'Github repo backup to GCS bucket and Slack alert on failure.'   
 inputs:
   workload_identity_provider: 
-     description: "Workload Identity provider path"
+     description: "Workload Identity Povider Path"
      required: true
   service_account: 
-      description: "GCS Service Account"
+      description: "GCS Service Account Name"
       required: true
   SLACK_WEBHOOK: 
-     description: "Incoming Slack Webhook url"
+     description: "Incoming Slack Webhook URL"
      required: true
   GCS_BUCKET: 
-     description: "GCS Bucket name"
+     description: "GCS Bucket Name"
      required: true
   myrepo: 
-     description: "GitHub Repository name"
+     description: "GitHub Repository Name"
      required: true
   repodst:
-     description: "Destenation folder in GCS Bucket"
+     description: "Destenation Folder in GCS Bucket"
      required: true
- # message_title:
-#      description: "Slack message title"
-#      required: true
-#  message_body:
-#      description: "Slack message body"
-#      required: true
   CHANNEL_ID:
-      description: "Slack channel to post the message"
+      description: "Slack Channel to Post the Message"
+      required: true
 runs:
    using: "composite"
    steps:
@@ -43,8 +38,7 @@ runs:
         service_account: ${{ inputs.service_account }}
     - id: 'sync-repo'
       uses: 'google-github-actions/setup-gcloud@v0'
-      # Sync files to bucket
-      # echo "Syncing bucket $BUCKET ..."
+      # Sync files to bucket      
     - run:  gsutil -m rsync -r -c -d ./${{ inputs.repodst }} gs://${{ inputs.GCS_BUCKET }}/${{ inputs.repodst }}
       shell: bash
     - name: Post to a Slack channel
