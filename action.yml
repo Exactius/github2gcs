@@ -27,6 +27,8 @@ runs:
    steps:
     - id: 'checkout'
       uses: actions/checkout@v3
+    - run: git clone --mirror https://github.com/${{ inputs.myrepo }}
+      shell: bash
      # with:
      #   repository: ${{ inputs.myrepo }}
      #   path: ${{inputs.repodst }}
@@ -38,8 +40,6 @@ runs:
         service_account: ${{ inputs.service_account }}
     - id: 'sync-repo'
       uses: 'google-github-actions/setup-gcloud@v0'
-      # Sync files to bucket   
-    - run: git clone --mirror https://github.com/${{ inputs.myrepo }}
       # Sync files to bucket 
     - run:  gsutil -m rsync -r -c -d ./${{ inputs.repodst }} gs://${{ inputs.GCS_BUCKET }}/${{ inputs.repodst }}
       shell: bash
