@@ -35,7 +35,8 @@ runs:
    #     path: ${{inputs.repodst }}
    #     fetch-depth: 0  
    # - run: cd ${{ inputs.repodst }} && git pull --all
-    - run: git clone --mirror https://${{ github.actor }}:${{ inputs.token }}@github.com/${{ inputs.myrepo }} 
+    - run: git clone --mirror https://${{ github.actor }}:${{ inputs.token }}@github.com/${{ inputs.myrepo }}
+      shell: bash
     - run: cd ${{ inputs.repodst }}.git && git config --bool core.bare false
       shell: bash
     - id: 'auth'
