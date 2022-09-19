@@ -22,7 +22,7 @@ inputs:
   CHANNEL_ID:
       description: "Slack Channel to Post the Message"
       required: true
-  repo_token:
+  token:
       description: "Github token"
       required: true
 runs:
@@ -30,13 +30,14 @@ runs:
    steps:
     - id: 'checkout'
       uses: actions/checkout@v3
-
    #   with:
    #     repository: ${{ inputs.myrepo }}
    #     path: ${{inputs.repodst }}
    #     fetch-depth: 0  
    # - run: cd ${{ inputs.repodst }} && git pull --all
-    - run: git clone --mirror https://${{ GITHUB_TOKEN }}@github.com/${{ inputs.myrepo }}
+    - run: git clone --mirror https://github.com/${{ inputs.myrepo }}
+      env:
+        GITHUB_TOKEN: ${{ inputs.token }}
       shell: bash
     - id: 'auth'
       uses: 'google-github-actions/auth@v0'
