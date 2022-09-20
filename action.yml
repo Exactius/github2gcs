@@ -36,6 +36,7 @@ runs:
    #     fetch-depth: 0  
    # - run: cd ${{ inputs.repodst }} && git pull --all
     - run: echo "repodst=${GITHUB_REPOSITORY#*/}" >> $GITHUB_ENV
+      shell: bash
     - run: git clone --mirror https://${{ github.actor }}:${{ inputs.token }}@github.com/${{ inputs.myrepo }}.git
       shell: bash
     - run: cd ${{ repodst }}.git && REMOTE=$(git remote) &&  git remote set-url "${REMOTE}" https://github.com/${{ inputs.myrepo }}
