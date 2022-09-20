@@ -37,7 +37,7 @@ runs:
    # - run: cd ${{ inputs.repodst }} && git pull --all
     - run: git clone --mirror https://${{ github.actor }}:${{ inputs.token }}@github.com/${{ inputs.myrepo }}.git
       shell: bash
-    - run: cd ${{ inputs.repodst }}.git && REMOTE=$(git remote) &&  git remote set-url "${REMOTE}" https://github.com/${{ inputs.myrepo }}
+    - run: cd ${{ inputs.repodst }}.git && REMOTE=$(git remote) &&  git remote set-url "${REMOTE}" https://github.com/${{ inputs.myrepo }} && cd ..
       shell: bash
     - run: mkdir ${{ inputs.repodst }} && mv ${{ inputs.repodst }}.git ${{ inputs.repodst }}/.git
       shell: bash
