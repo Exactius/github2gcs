@@ -37,9 +37,9 @@ runs:
    # - run: cd ${{ inputs.repodst }} && git pull --all
     - run: git clone --mirror https://${{ github.actor }}:${{ inputs.token }}@github.com/${{ inputs.myrepo }}.git
       shell: bash
-    - run: cd ${{ input.repodst }}.git && REMOTE=$(git remote) &&  git remote set-url "${REMOTE}" https://github.com/${{ inputs.myrepo }}
+    - run: cd ${{ inputs.repodst }}.git && REMOTE=$(git remote) &&  git remote set-url "${REMOTE}" https://github.com/${{ inputs.myrepo }}
       shell: bash
-    - run: mkdir ${{ input.repodst }} && mv ${{ input.repodst }}.git ${{ input.repodst }}/.git
+    - run: mkdir ${{ inputs.repodst }} && mv ${{ inputs.repodst }}.git ${{ inputs.repodst }}/.git
       shell: bash
     - id: 'auth'
       uses: 'google-github-actions/auth@v0'
@@ -49,7 +49,7 @@ runs:
     - id: 'sync-repo'
       uses: 'google-github-actions/setup-gcloud@v0'
       # Sync files to bucket 
-    - run:  gsutil -m rsync -r -c -d ./${{ input. }} gs://${{ inputs.GCS_BUCKET }}/${{ inputs.repodst }}
+    - run:  gsutil -m rsync -r -c -d ./${{ inputs.repodst }} gs://${{ inputs.GCS_BUCKET }}/${{ inputs.repodst }}
       shell: bash
     - name: Post to a Slack channel
       if: ${{ failure() }}
